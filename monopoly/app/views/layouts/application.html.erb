@@ -2,13 +2,30 @@
 <html>
 <head>
   <title>Monopoly</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
+  <link rel="stylesheet" href="/css/site.css" />
+  
 </head>
 <body>
+      
+  <div data-role="page">
 
-<%= yield %>
+      <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+        <h1>Monopoly</h1>
+      </div><!-- /header -->
+
+      <div role="main" class="ui-content">
+
+        <%= yield %>
+        
+      </div><!-- /content -->
+
+    </div><!-- /page -->
 
 </body>
 </html>

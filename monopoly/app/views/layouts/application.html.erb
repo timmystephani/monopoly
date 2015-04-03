@@ -9,7 +9,7 @@
   <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
   
   <link rel="stylesheet" href="/css/site.css" />
-  
+
 </head>
 <body>
       
@@ -20,6 +20,8 @@
       </div><!-- /header -->
 
       <div role="main" class="ui-content">
+
+        <%= render :partial => 'partials/flash_messages' %>
 
         <%= yield %>
         

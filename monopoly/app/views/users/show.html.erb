@@ -1,14 +1,24 @@
-<p id="notice"><%= notice %></p>
+<h1>Welcome <%= @user.email %>!</h1>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<hr>
 
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
+<h2>Games in Progress</h2>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<ul data-role="listview" data-inset="true" data-divider-theme="b">
+	<% @user.games.each do |g| %>
+		<li>
+			<a href="<%= game_path(g) %>">
+				<h3>Game with <%= g.players.map { |p| p.name }.join(', ') %></h3>
+				<p>Tim's Turn</p>
+				<p class="ui-li-aside">Started on <%= g.created_at.strftime("%m/%d/%Y") %></p>
+			</a>
+		</li>
+	<% end %>
+</ul>
+
+<br><br>
+
+<div class="ui-input-btn ui-btn ui-btn-b ui-corner-all">
+Create a New Game
+	<input type="submit" data-enhanced="true" value="Sign Up">
+</div>

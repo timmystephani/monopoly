@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402231935) do
+ActiveRecord::Schema.define(version: 20150402235721) do
+
+  create_table "games", force: :cascade do |t|
+    t.integer  "current_player_id"
+    t.string   "status"
+    t.integer  "free_parking_pot"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.string   "name"
+    t.string   "token"
+    t.integer  "cash"
+    t.boolean  "in_jail"
+    t.integer  "jail_rolls"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",      null: false

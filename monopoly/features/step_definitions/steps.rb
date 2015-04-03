@@ -47,10 +47,6 @@ Given(/^I have filled in the Create Account without password$/) do
   end
 end
 
-Then(/^I should see the create user error page$/) do
-  assert page.has_content?("prohibited this user from being saved")
-end
-
 Given(/^I have filled in the Log In incorrectly$/) do
   within("//form[@action='/login']") do
     fill_in('user[email]', :with => 'Test2@gmail.com')

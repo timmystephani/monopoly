@@ -17,6 +17,9 @@
 
       <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
         <h1>Monopoly</h1>
+        <% if current_user %>
+        <a href="/logout">Log out</a>
+        <% end %>
       </div><!-- /header -->
 
       <div role="main" class="ui-content">

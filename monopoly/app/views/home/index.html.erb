@@ -4,20 +4,26 @@
 
 <div class="well">
 	<h2>Log In</h2>
-	Email <input type="email" name="email" />
-	Password <input type="password" name="password" />
+  <form action="/login" method="POST">
+  Email <input type="email" name="user[email]" />
+	Password <input type="password" name="user[password]" />
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 	<div class="ui-input-btn ui-btn ui-btn-b ui-corner-all">
 	    Log In
 	    <input type="submit" data-enhanced="true" value="Log In">
   	</div>
+  </form>
 </div>
 
 <div class="well">
-	<h2>Sign Up</h2>
-	Email <input type="email" name="email" />
-	Password <input type="password" name="password" />
+  <h2>Sign Up</h2>
+  <form action="<%=users_path%>" method="POST">
+	Email <input type="email" name="user[email]" />
+  Password <input type="password" name="user[password]" />
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 	<div class="ui-input-btn ui-btn ui-btn-b ui-corner-all">
 	    Sign Up
-	    <input type="submit" data-enhanced="true" value="Sign Up">
-  	</div>
+      <input type="submit" data-enhanced="true" value="Sign Up">
+  </div>
+  </form>
 </div>

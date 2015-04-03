@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authorize
-    redirect_to '/' unless current_user
+    redirect_to user_path @current_user unless current_user.nil?
   end
 end

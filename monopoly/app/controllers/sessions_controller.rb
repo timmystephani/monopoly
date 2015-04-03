@@ -5,17 +5,18 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by_email(params[:user][:email])
     if @user && @user.authenticate(params[:user][:password])
-      flash[:notice] = 'Successfully created an account'
+      flash[:notice] = 'Successfully logged in'
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
-      flash[:error] = 'There was a problem creating your account'
+      flash[:error] = 'There was a problem logging in'
       redirect_to '/'
     end
   end
 
   def destroy
     session[:user_id] = nil
+    flash[:notice] = 'You have been logged out'
     redirect_to '/'
   end
 

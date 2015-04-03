@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = 'User was successfully created.'
-      redirect_to users_path @user
+      redirect_to user_path @user
     else
       flash[:error] = @user.errors.full_messages.to_sentence
     end

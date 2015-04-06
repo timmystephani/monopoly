@@ -62,3 +62,12 @@ end
 Given(/^I have selected log out$/) do
   visit('/logout')
 end
+
+Given(/^I have clicked Create a New Game link$/) do
+  click_link('Create a New Game')
+end
+
+Then(/^I should see the new game page$/) do
+  assert page.has_content?("Confirmed Players")
+  assert page.has_content?("Invited Players")
+end

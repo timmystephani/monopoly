@@ -39,7 +39,7 @@ properties = [
     rent_price: 8
   },
   {
-    name: 'St. James Place',
+    name: 'St. Charles Place',
     position: 11,
     purchase_price: 180,
     rent_price: 14

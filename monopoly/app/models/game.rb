@@ -23,4 +23,55 @@ class Game < ActiveRecord::Base
     statuses
   end
 
+  def roll_dice
+    turn_history = []
+
+    #for debugging
+    die1 = 5
+    die2 = 4
+
+    current_player = Player.find current_player_id
+    current_board_space = BoardSpace.find_by_position current_player.position
+    new_board_space = BoardSpace.find_by_position current_player.position + die1 + die2
+
+    # TODO: check edge cases here
+    if new_board_space.position >= BoardSpace.all.length 
+      turn_history << current_player.name + ' passed GO and collected $200.'
+      current_player.cash += 200
+      new_board_space.position -= BoardSpace.all.length
+    end
+
+    current_player.position = new_board_space.position
+    
+    turn_history << current_player.name + ' rolled a ' + die1.to_s + ' and a ' + die2.to_s + ' and moved from ' + current_board_space.name + ' to ' + new_board_space.name + '.'
+
+    current_player_id = get_next_player_id
+    
+    # Save history
+    history = History.new
+    history.game = self
+    history.details = turn_history.join(' ')
+    history.save
+
+    # Save current player
+    current_player.save
+
+    # Save game
+    save
+
+  end
+
+  private
+
+  def get_next_player_id
+    player_ids = Game.first.players.map {|p| p.id }
+    
+    current_player_index = player_ids.index(current_player_id)
+    if current_player_index == player_ids.length
+      return player_ids[0]
+    else
+      return player_ids[current_player_index + 1]
+    end
+  end
+
 end

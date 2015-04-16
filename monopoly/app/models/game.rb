@@ -47,7 +47,7 @@ class Game < ActiveRecord::Base
     
     turn_history << current_player.name + ' rolled a ' + die1.to_s + ' and a ' + die2.to_s + ' and moved from ' + current_board_space.name + ' to ' + new_board_space.name + '.'
 
-    current_player_id = get_next_player_id
+    self.current_player_id = get_next_player_id
     
     # Save history
     history = History.new

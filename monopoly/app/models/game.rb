@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: games
+#
+#  id                :integer          not null, primary key
+#  current_player_id :integer
+#  status            :string
+#  free_parking_pot  :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  created_user_id   :integer
+#
+
 class Game < ActiveRecord::Base
   has_many :players
 

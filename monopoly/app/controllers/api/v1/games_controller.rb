@@ -16,4 +16,12 @@ class Api::V1::GamesController < Api::V1::ApplicationController
 
     render json:  game 
   end
+
+  def roll_dice
+    game = Game.find(params[:id])
+
+    game.roll_dice
+
+    render json: { status: 200, message: 'success' }
+  end
 end

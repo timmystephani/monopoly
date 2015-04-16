@@ -32,14 +32,16 @@ class Game < ActiveRecord::Base
 
     current_player = Player.find current_player_id
     current_board_space = BoardSpace.find_by_position current_player.position
-    new_board_space = BoardSpace.find_by_position current_player.position + die1 + die2
+    new_board_space_position = current_player.position + die1 + die2
 
     # TODO: check edge cases here
-    if new_board_space.position >= BoardSpace.all.length 
+    if new_board_space_position >= BoardSpace.all.length 
       turn_history << current_player.name + ' passed GO and collected $200.'
       current_player.cash += 200
-      new_board_space.position -= BoardSpace.all.length
+      new_board_space_position -= BoardSpace.all.length
     end
+
+    new_board_space = BoardSpace.find_by_position new_board_space_position
 
     current_player.position = new_board_space.position
     

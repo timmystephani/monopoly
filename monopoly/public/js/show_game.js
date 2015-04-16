@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	ui.setupClickHandlers();
 	api.loadBoardSpaces();
+	api.getGame(function(data) {
+		ui.refreshGame(data);
+	});
 });
 
 var ui = {
@@ -21,6 +24,19 @@ var ui = {
 			};
 
 			api.getGame(callback);
+		});
+
+		$('#roll_dice').click(function() {
+			var gameId = $('#gameId').val();
+
+			$.ajax({
+				'url': api.endPoint + 'games/' + gameId + '/roll_dice'
+			})
+			.done(function(data) {
+				api.getGame(function(data) {
+					ui.refreshGame(data);
+				})
+			});
 		});
 	},
 

@@ -8,6 +8,7 @@ $(document).ready(function() {
 
 var ui = {
 	boardSpaces: null,
+	currentPlayerId: null,
 
 	setupClickHandlers: function() {
 		$('#refresh_link').click(function() {
@@ -51,6 +52,7 @@ var ui = {
   },
 
 	refreshGame: function(data) {
+		ui.currentPlayerId = data.current_player_id;
 		ui.refreshPlayers(data.players);
 		ui.refreshHistory(data.history);
 	},
@@ -69,7 +71,26 @@ var ui = {
 		var html = '';
 
 		for (var i = 0; i < players.length; i++) {
-			html += players[i].name + ' ($' + players[i].cash + ')' + '<br>';
+			var player = players[i];
+
+			html += players[i].name + ' ($' + players[i].cash + ')';
+
+			var currentBoardSpace;
+			for (var boardSpaceIndex = 0; boardSpaceIndex < ui.boardSpaces.length; boardSpaceIndex++) {
+				var boardSpace = ui.boardSpaces[boardSpaceIndex];
+
+				if (boardSpace.position == player.position) {
+					currentBoardSpace = boardSpace;
+					break;
+				}
+			}
+
+			html += ' ' + currentBoardSpace.name;
+
+			if (player.id == ui.currentPlayerId) {
+				html += ' <strong>Current Player</strong>';
+			}
+			html += '<br>';
 		}
 
 		$('#players').html(html);

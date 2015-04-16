@@ -17,6 +17,7 @@ var ui = {
 	},
 
 	refreshGame: function(data) {
+		ui.refreshPlayers(data.players);
 		ui.refreshHistory(data.history);
 	},
 
@@ -28,6 +29,16 @@ var ui = {
 		}
 
 		$('#history').html(html);
+	},
+
+	refreshPlayers: function(players) {
+		var html = '';
+
+		for (var i = 0; i < players.length; i++) {
+			html += players[i].name + ' ($' + players[i].cash + ')' + '<br>';
+		}
+
+		$('#players').html(html);
 	}
 
 };

@@ -66,10 +66,10 @@ class Game < ActiveRecord::Base
   private
 
   def get_next_player_id
-    player_ids = Game.first.players.map {|p| p.id }
+    player_ids = players.map {|p| p.id }
     
     current_player_index = player_ids.index(current_player_id)
-    if current_player_index == player_ids.length
+    if current_player_index == player_ids.length - 1
       return player_ids[0]
     else
       return player_ids[current_player_index + 1]

@@ -12,9 +12,27 @@ var ui = {
 				ui.refreshGame(data);
 			};
 
-			api.refreshGame(callback);
+			api.getGame(callback);
+		});
+
+		$('#ownedProperties').click(function() {
+			var callback = function(data) {
+				ui.showOwnedPropPopup(data);
+			};
+
+			api.getGame(callback);
 		});
 	},
+
+  showOwnedPropPopup: function(data) {
+    var html = 'ToDo';
+
+    //need to build for each loop over owned
+    //properties to display to screen
+
+    $('#propertyList').html(html);
+    $('#ownedPropertiesDiv').popup("open");
+  },
 
 	refreshGame: function(data) {
 		ui.refreshPlayers(data.players);
@@ -23,7 +41,7 @@ var ui = {
 
 	refreshHistory: function(history) {
 		var html = '';
-		
+
 		for (var i = 0; i < history.length; i++) {
 			html += history[i].details + '<br>';
 		}
@@ -40,7 +58,6 @@ var ui = {
 
 		$('#players').html(html);
 	}
-
 };
 
 var api = {
@@ -56,10 +73,10 @@ var api = {
 			error: function() {
 				alert('ERROR');
 			}
-		});		
+		});
 	},
 
-	refreshGame: function(callback) {
+	getGame: function(callback) {
 		var gameId = $('#gameId').val();
 
 		$.ajax({

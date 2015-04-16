@@ -43,9 +43,9 @@ var ui = {
 		var html = '';
 
 		for (var i = 0; i < history.length; i++) {
-			html += history[i].details + '<br>';
+			html += '<strong>' + history[i].created_at + ':</strong> ' + history[i].details + '<br>';
 		}
-
+		
 		$('#history').html(html);
 	},
 

@@ -26,9 +26,12 @@ class Game < ActiveRecord::Base
   def roll_dice
     turn_history = []
 
+    die1 = 1 + rand(6)
+    die2 = 1 + rand(6)
+
     #for debugging
-    die1 = 5
-    die2 = 4
+    # die1 = 5
+    # die2 = 4
 
     current_player = Player.find current_player_id
     current_board_space = BoardSpace.find_by_position current_player.position

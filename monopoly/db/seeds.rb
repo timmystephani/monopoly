@@ -6,6 +6,63 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# first delete all
+BoardSpace.all.each do |bs|
+  bs.delete
+end
+
+board_spaces = [
+  {
+    name: 'GO', 
+    position: 0
+  },
+  {
+    name: 'Community Chest', 
+    position: 2
+  },
+  {
+    name: 'Community Chest', 
+    position: 17
+  },
+  {
+    name: 'Community Chest', 
+    position: 33
+  },
+  {
+    name: 'Income Tax', 
+    position: 4
+  },
+  {
+    name: 'Chance', 
+    position: 7
+  },
+  {
+    name: 'Chance', 
+    position: 22
+  },
+  {
+    name: 'Chance', 
+    position: 36
+  },
+  {
+    name: 'Visiting Jail', 
+    position: 10
+  },
+  {
+    name: 'Free Parking', 
+    position: 20
+  },
+  {
+    name: 'Go to Jail', 
+    position: 30
+  },
+  {
+    name: 'Luxury Tax', 
+    position: 38
+  },
+]
+
+BoardSpace.create(board_spaces)
 
 properties = [
   {
@@ -137,9 +194,46 @@ properties = [
   {
     name: 'Boardwalk',
     position: 39,
-    purchase_price: 4000,
+    purchase_price: 400,
     rent_price: 50
   },
+  {
+    name: 'Electric Company',
+    position: 12,
+    purchase_price: 150,
+    rent_price: 10
+  },
+  {
+    name: 'Water Works',
+    position: 28,
+    purchase_price: 150,
+    rent_price: 10
+  }
 ]
 
 Property.create(properties)
+
+railroads = [
+  {
+    name: 'Reading Railroad', 
+    position: 5,
+    purchase_price: 200
+  },
+  {
+    name: 'Pennsylvania Railroad', 
+    position: 15,
+    purchase_price: 200
+  },
+  {
+    name: 'B&O Railroad', 
+    position: 25,
+    purchase_price: 200
+  },
+  {
+    name: 'Short Line Railroad', 
+    position: 35,
+    purchase_price: 200
+  }
+]
+
+RailRoad.create(railroads)

@@ -3,7 +3,7 @@ class Api::V1::GamesController < Api::V1::ApplicationController
     game = Game.find(params[:id])
     history = game.histories.order('created_at DESC').limit(10)
     
-    game = game.as_json
+    game = JSON.parse(game.to_json( :include => [:players]))
     game['history'] = history
 
     render json:  game 

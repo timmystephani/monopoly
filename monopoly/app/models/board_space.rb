@@ -10,5 +10,5 @@
 #
 
 class BoardSpace < ActiveRecord::Base
-
+  has_many :owned_properties
 end

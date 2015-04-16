@@ -10,11 +10,11 @@ class Api::V1::GamesController < Api::V1::ApplicationController
       h['created_at_formatted'] = h['created_at'].to_datetime.strftime("%m/%d/%Y")
     end
 
-    game = JSON.parse(game.to_json( :include => [:players]))
-    
+    game = JSON.parse(game.to_json( :include => [:players => {:include => [:owned_properties]}]))
+
     game['history'] = history
 
-    render json:  game 
+    render json:  game
   end
 
   def roll_dice

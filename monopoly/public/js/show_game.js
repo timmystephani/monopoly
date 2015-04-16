@@ -42,10 +42,16 @@ var ui = {
 	},
 
   showOwnedPropPopup: function(data) {
-    var html = 'ToDo';
+    var html = '';
+    var players = data.players;
 
-    //need to build for each loop over owned
-    //properties to display to screen
+    for(var i=0; i < players.length; i++) {
+      html += players[i].name + ':<br>';
+      var owned_properties = players[i].owned_properties;
+      for(var j=0; j < owned_properties.length; j++) {
+        html += '&nbsp;&nbsp;&nbsp;' + owned_properties[j] + '<br>';
+      }
+    }
 
     $('#propertyList').html(html);
     $('#ownedPropertiesDiv').popup("open");
@@ -63,7 +69,7 @@ var ui = {
 		for (var i = 0; i < history.length; i++) {
 			html += '<strong>' + history[i].created_at_formatted + ':</strong> ' + history[i].details + '<br>';
 		}
-		
+
 		$('#history').html(html);
 	},
 

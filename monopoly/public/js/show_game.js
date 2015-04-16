@@ -17,8 +17,18 @@ var ui = {
 	},
 
 	refreshGame: function(data) {
-		alert(data);
+		ui.refreshHistory(data.history);
 	},
+
+	refreshHistory: function(history) {
+		var html = '';
+		
+		for (var i = 0; i < history.length; i++) {
+			html += history[i].details + '<br>';
+		}
+
+		$('#history').html(html);
+	}
 
 };
 

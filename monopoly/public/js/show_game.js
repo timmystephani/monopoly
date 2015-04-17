@@ -68,9 +68,18 @@ var ui = {
 
     for(var i=0; i < players.length; i++) {
       html += players[i].name + ':<br>';
-      var owned_properties = players[i].owned_properties;
-      for(var j=0; j < owned_properties.length; j++) {
-        html += '&nbsp;&nbsp;&nbsp;' + owned_properties[j] + '<br>';
+      var ownedProperties = players[i].owned_properties;
+      for(var j = 0; j < ownedProperties.length; j++) {
+      	var ownedProperty = ownedProperties[j];
+
+      	var boardSpace;
+      	for (var boardSpaceIndex = 0; boardSpaceIndex < ui.boardSpaces.length; boardSpaceIndex++) {
+      		if (ownedProperty.board_space_id == ui.boardSpaces[boardSpaceIndex].id) {
+      			boardSpace = ui.boardSpaces[boardSpaceIndex];
+      			break;
+      		}
+      	}
+        html += '&nbsp;&nbsp;&nbsp;' + boardSpace.name + '<br>';
       }
     }
 
@@ -143,7 +152,7 @@ var api = {
 				callback();
 			},
 			error: function() {
-				alert('ERROR');
+				alert('ERROR: Couldnt retreive board spaces.');
 			}
 		});
 	},
@@ -157,7 +166,7 @@ var api = {
 				callback(data);
 			},
 			error: function() {
-				alert('ERROR');
+				alert('ERROR: Couldnt get game info.');
 			}
 		});
 	}, 
@@ -172,7 +181,7 @@ var api = {
 				callback(data);
 			},
 			error: function() {
-				alert('ERROR');
+				alert('ERROR: couldnt respond to property purchase.');
 			}
 		});
 	}

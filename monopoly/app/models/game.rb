@@ -37,10 +37,32 @@ class Game < ActiveRecord::Base
     die2 = 1 + rand(6)
 
     #for debugging
-    # die1 = 5
-    # die2 = 4
+    # die1 = 2
+    # die2 = 3
 
     current_player = Player.find current_player_id
+
+    started_turn_in_jail = current_player.in_jail
+
+    if current_player.in_jail
+      if die1 == die2
+        turn_history << current_player.name + ' rolled doubles and got out of jail.'
+        current_player.in_jail = false
+      else
+        # keep track of player turns in jail
+        if current_player.jail_rolls == 2
+          turn_history << current_player.name + ' paid $50 to get out of jail.'
+          current_player.cash -= 50
+          current_player.in_jail = false
+        else
+          turn_history << current_player.name + ' did not roll doubles and is staying in jail.'
+          current_player.jail_rolls += 1
+          finish_turn(current_player, turn_history, started_turn_in_jail, die1, die2)
+          return
+        end
+      end
+    end
+    
     current_board_space = BoardSpace.find_by_position current_player.position
     new_board_space_position = current_player.position + die1 + die2
 
@@ -79,15 +101,24 @@ class Game < ActiveRecord::Base
       # TODO: what if user doesn't have enough money
       current_player.cash -= 75 # TODO: is this lux tax amount correct
       turn_history << current_player.name + ' paid Luxury Tax of $75.'
+
+    elsif new_board_space.name == 'Go to Jail'
+      current_player.position = position = 10 # visiting jail space
+      current_player.in_jail = true
+      current_player.jail_rolls = 0
     end
 
-    if status == 'IN_PROGRESS'
+    finish_turn(current_player, turn_history, started_turn_in_jail, die1, die2)
+  end
+
+  def finish_turn(current_player, turn_history, started_turn_in_jail, die1, die2)
+    if status == 'IN_PROGRESS' && (die1 != die2 || started_turn_in_jail)
       self.current_player_id = get_next_player_id
     end
 
-    if die1 == die2
-      # self.current_player_doubles_rolled += 1
-    end
+    # if die1 == die2
+    #   # self.current_player_doubles_rolled += 1
+    # end 
 
     # Save history
     save_history turn_history
@@ -97,7 +128,6 @@ class Game < ActiveRecord::Base
 
     # Save game
     save
-
   end
 
   def respond_to_property_purchase(yes_no)

@@ -61,10 +61,15 @@ class Game < ActiveRecord::Base
       
       elsif new_board_space.owned_property.player.id == id
         # current user owns property
-
+        turn_history << current_player.name + ' already owns ' + new_board_space.name + '.'
       else  
         # someone else owns it
+        current_owner = new_board_space.owned_property.player
 
+        turn_history << current_player.name + ' paid $' + new_board_space.rent_price.to_s + ' to ' + current_owner.name + ' for rent.'
+        current_player.cash -= new_board_space.rent_price
+        current_owner.cash += new_board_space.rent_price
+        current_owner.save
       end
 
     elsif new_board_space.name == 'Luxury Tax'

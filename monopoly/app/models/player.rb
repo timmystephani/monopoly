@@ -26,7 +26,7 @@ class Player < ActiveRecord::Base
   after_initialize :init
 
   def init
-    self.case ||= 1500
+    self.cash ||= 1500
     self.in_jail ||= false
     self.position ||= 0
   end

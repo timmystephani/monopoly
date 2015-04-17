@@ -1,9 +1,12 @@
 $(document).ready(function() {
 	ui.setupClickHandlers();
-	api.loadBoardSpaces();
-	api.getGame(function(data) {
-		ui.refreshGame(data);
-	});
+	var callback = function() {
+		api.getGame(function(data) {
+			ui.refreshGame(data);
+		});
+	};
+
+	api.loadBoardSpaces(callback);
 });
 
 var ui = {
@@ -39,6 +42,24 @@ var ui = {
 				})
 			});
 		});
+
+		$('#purchase_property_link_no').click(function() {
+			api.respondToPropertyPurchase('no', function() {
+				$('#property_purchase_popup').popup('close');
+				api.getGame(function(data) {
+					ui.refreshGame(data);
+				})
+			});
+		});
+
+		$('#purchase_property_link_yes').click(function() {
+			api.respondToPropertyPurchase('yes', function() {
+				$('#property_purchase_popup').popup('close');
+				api.getGame(function(data) {
+					ui.refreshGame(data);
+				})
+			});
+		});
 	},
 
   showOwnedPropPopup: function(data) {
@@ -61,6 +82,13 @@ var ui = {
 		ui.currentPlayerId = data.current_player_id;
 		ui.refreshPlayers(data.players);
 		ui.refreshHistory(data.history);
+
+		if (data.status == 'WAITING_ON_USER_INPUT') {
+			if (data.user_prompt_type == 'PROPERTY_PURCHASE') {
+				$('#property_purchase_popup p').text(data.user_prompt_question);
+				$('#property_purchase_popup').popup('open');
+			}
+		}
 	},
 
 	refreshHistory: function(history) {
@@ -107,11 +135,12 @@ var api = {
 
 	endPoint: 'http://localhost:3000/api/v1/',
 
-	loadBoardSpaces: function() {
+	loadBoardSpaces: function(callback) {
 		$.ajax({
 			url: api.endPoint + 'board_spaces',
 			success: function(data) {
 				ui.boardSpaces = data;
+				callback();
 			},
 			error: function() {
 				alert('ERROR');
@@ -124,6 +153,21 @@ var api = {
 
 		$.ajax({
 			url: api.endPoint + 'games/' + gameId,
+			success: function(data) {
+				callback(data);
+			},
+			error: function() {
+				alert('ERROR');
+			}
+		});
+	}, 
+
+	respondToPropertyPurchase: function(yesNo, callback) {
+		var gameId = $('#gameId').val();
+
+		$.ajax({
+			url: api.endPoint + 'games/' + gameId + '/respond_to_property_purchase',
+			data: { 'yes_no': yesNo },
 			success: function(data) {
 				callback(data);
 			},

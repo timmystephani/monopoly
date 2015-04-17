@@ -24,4 +24,14 @@ class Api::V1::GamesController < Api::V1::ApplicationController
 
     render json: { status: 200, message: 'success' }
   end
+
+  def respond_to_property_purchase
+    game = Game.find(params[:id])
+
+    yes_no = params[:yes_no]
+
+    game.respond_to_property_purchase(yes_no)
+
+    render json: { status: 200, message: 'success' }
+  end
 end

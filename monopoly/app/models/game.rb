@@ -59,7 +59,7 @@ class Game < ActiveRecord::Base
         self.user_prompt_question = new_board_space.name + ' is available to purchase for $' + new_board_space.purchase_price.to_s + '. Would you like to purchase?'
         self.user_prompt_type = 'PROPERTY_PURCHASE'
       
-      elsif new_board_space.owned_property.player.id == id
+      elsif new_board_space.owned_property.player.id == current_player.id
         # current user owns property
         turn_history << current_player.name + ' already owns ' + new_board_space.name + '.'
       else  

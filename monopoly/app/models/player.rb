@@ -21,7 +21,7 @@ class Player < ActiveRecord::Base
   has_many :owned_properties
   validates :name, presence: true
   validates :cash, presence: true
-  validates :in_jail, presence: true
+  validates_inclusion_of :in_jail, :in => [true, false]
   validates :position, presence: true
   after_initialize :init
 

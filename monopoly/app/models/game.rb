@@ -16,6 +16,10 @@ class Game < ActiveRecord::Base
   has_many :histories
   has_many :used_comm_chest_chances
   has_many :owned_properties
+  validates :current_player_id, presence: true
+  validates :status, presence: true
+  validates :free_parking_pot, presence: true
+  after_initialize :init
 
   def self.statuses
     statuses = []
@@ -40,7 +44,7 @@ class Game < ActiveRecord::Base
     current_board_space = BoardSpace.find_by_position current_player.position
     new_board_space_position = current_player.position + die1 + die2
 
-    if new_board_space_position >= BoardSpace.all.length 
+    if new_board_space_position >= BoardSpace.all.length
       turn_history << current_player.name + ' passed GO and collected $200.'
       current_player.cash += 200
       new_board_space_position -= BoardSpace.all.length
@@ -58,11 +62,10 @@ class Game < ActiveRecord::Base
         self.status = 'WAITING_ON_USER_INPUT'
         self.user_prompt_question = new_board_space.name + ' is available to purchase for $' + new_board_space.purchase_price.to_s + '. Would you like to purchase?'
         self.user_prompt_type = 'PROPERTY_PURCHASE'
-      
       elsif new_board_space.owned_property.player.id == current_player.id
         # current user owns property
         turn_history << current_player.name + ' already owns ' + new_board_space.name + '.'
-      else  
+      else
         # someone else owns it
         current_owner = new_board_space.owned_property.player
 
@@ -84,7 +87,7 @@ class Game < ActiveRecord::Base
 
     if die1 == die2
       # self.current_player_doubles_rolled += 1
-    end 
+    end
 
     # Save history
     save_history turn_history
@@ -97,9 +100,9 @@ class Game < ActiveRecord::Base
 
   end
 
-  def respond_to_property_purchase(yes_no) 
+  def respond_to_property_purchase(yes_no)
     turn_history = []
-    
+
     current_player = Player.find current_player_id
     new_property = BoardSpace.find_by_position current_player.position
 
@@ -113,7 +116,7 @@ class Game < ActiveRecord::Base
       # TODO: what if they don't have enough cash
       current_player.cash -= new_property.purchase_price
       current_player.save
-    
+
       turn_history << current_player.name + ' bought ' + new_property.name + ' for $' + new_property.purchase_price.to_s + '.'
     else
       turn_history << current_player.name + ' did not buy ' + new_property.name + '.'
@@ -131,7 +134,7 @@ class Game < ActiveRecord::Base
 
   private
 
-  # Expects history to be an array 
+  # Expects history to be an array
   def save_history(turn_history)
     history = History.new
     history.game = self
@@ -148,6 +151,11 @@ class Game < ActiveRecord::Base
     else
       return player_ids[current_player_index + 1]
     end
+  end
+
+  def init
+    self.status ||= 'IN_PROGRESS'
+    self.free_parking_pot ||= 0
   end
 
 end

@@ -2,6 +2,7 @@ class UsedCommChestChance < ActiveRecord::Base
   belongs_to :game
   enum card_type: [:chance, :comm_chest]
   validates :card_index, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 16}
+  validates :card_index, presence: true
 
   def self.chance_cards
     chance_cards = []

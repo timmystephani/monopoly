@@ -19,4 +19,15 @@ class Player < ActiveRecord::Base
   belongs_to :game
   belongs_to :user
   has_many :owned_properties
+  validates :name, presence: true
+  validates :cash, presence: true
+  validates :in_jail, presence: true
+  validates :position, presence: true
+  after_initialize :init
+
+  def init
+    self.case ||= 1500
+    self.in_jail ||= false
+    self.position ||= 0
+  end
 end

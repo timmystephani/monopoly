@@ -71,3 +71,59 @@ Then(/^I should see the new game page$/) do
   assert page.has_content?("Confirmed Players")
   assert page.has_content?("Invited Players")
 end
+
+Given(/^I have a game in progress$/) do
+    pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I have selected a game$/) do
+    pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see the game status$/) do
+    pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to invite people to a game$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I have a game invitation$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to accept the invitation$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to reject the invitation$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to see the game history$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I have selected Owned Properties$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to see the owned properties$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I have selected Roll Dice$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to see the results of my roll$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I have selected Refresh$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to see a refreshed page$/) do
+  pending # express the regexp above with the code you wish you had
+end

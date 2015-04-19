@@ -13,7 +13,6 @@ end
 Then(/^I should see the user's page$/) do
   assert page.has_content?("Welcome")
   assert page.has_content?("Games in Progress")
-  assert page.has_content?("Game Invitations")
 end
 
 Given(/^I have an account$/) do
@@ -68,16 +67,20 @@ Given(/^I have clicked Create a New Game link$/) do
 end
 
 Then(/^I should see the new game page$/) do
-  assert page.has_content?("Confirmed Players")
-  assert page.has_content?("Invited Players")
+  assert page.has_content?("Create New Game")
+  assert page.has_content?("All Players")
 end
 
 Given(/^I have a game in progress$/) do
-    pending # express the regexp above with the code you wish you had
+  click_link('Create a New Game')
+  click_link("Create Game")
+  save_and_open_page
 end
 
 Given(/^I have selected a game$/) do
-    pending # express the regexp above with the code you wish you had
+  first('a.ui-btn.ui-btn-icon-right.ui-icon-carat-r').click
+  assert page.has_content?("Game of Monopoly")
+  assert page.has_content("Status")
 end
 
 Then(/^I should see the game status$/) do
@@ -85,7 +88,7 @@ Then(/^I should see the game status$/) do
 end
 
 Then(/^I should be able to invite people to a game$/) do
-  pending # express the regexp above with the code you wish you had
+  assert page.has_content?("Add another player")
 end
 
 Given(/^I have a game invitation$/) do

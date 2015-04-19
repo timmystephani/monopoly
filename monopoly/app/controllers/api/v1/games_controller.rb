@@ -34,4 +34,27 @@ class Api::V1::GamesController < Api::V1::ApplicationController
 
     render json: { status: 200, message: 'success' }
   end
+
+  def create
+    game = Game.new
+    game.current_player_id = 1 # updating later
+    game.save
+
+    params[:players].each do |number, info|
+      puts info['email']
+      player = Player.new
+      user = User.find_by_email(info['email'])
+      player.user_id = user.id
+      player.game_id = game.id
+      player.name = user.email
+      player.save
+    end
+
+    first_player = game.players.first
+    game.created_user_id = first_player.user_id
+    game.current_player_id = first_player.id
+    game.save
+
+    render json: { status: 200, message: 'success' }
+  end
 end

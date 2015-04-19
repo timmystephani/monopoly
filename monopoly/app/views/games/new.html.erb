@@ -2,8 +2,97 @@
 
 <hr>
 
-<h2>Confirmed Players</h2>
+<h2>All Players</h2>
 
-<h2>Invited Players</h2>
+<table id="players_table">
+  <thead>
+    <tr>
+      <th>Player #</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><%= current_user.email %></td>
+    </tr>
+  </tbody>
+</table>
 
-<h2>Cancelled?</h2>
+<br>
+
+<a id="add_player" href="">Add another player</a>
+
+<br><br>
+
+<a href="" id="create_game" class="ui-btn ui-btn-b ui-corner-all">Create Game</a>
+
+<div data-role="popup" id="add_player_popup">
+  <h1>Add another player</h1>
+  Email: <input type="text" id="email" />
+  <a href="" id="save_player" class="ui-btn ui-btn-b ui-corner-all ui-btn-inline">Save Player</a>  
+</div>
+
+
+
+<!-- todo: 
+
+limit number of players
+validate same player isn't being added twice
+
+-->
+<script src="/js/api.js"></script>
+<script>
+$(document).ready(function() {
+  $('#add_player').click(function() {
+    $('#add_player_popup').popup('open');
+  });
+
+  $('#save_player').click(function() {
+    var email = $('#email').val();
+    $.ajax({
+      url: api.endPoint + 'users/show',
+      data: { email: email },
+      success: function(data) {
+        if (data.hasOwnProperty('id')) {
+          var lastPlayerNumber = parseInt($('#players_table tbody tr').last().children('td').first().text());
+
+          var newRow = '<tr><td>' + (lastPlayerNumber + 1) + '</td><td>' + email + '</td></tr>';
+          $('#players_table tbody').append(newRow);
+          //alert(lastPlayerNumber);
+          $('#add_player_popup').popup('close');
+        } else {
+          alert('User does not have an account with Monopoly.');
+        }
+        
+      },
+      error: function() {
+        alert('Error calling users show.');
+      }
+    });
+  });
+
+  $('#create_game').click(function() {
+    // create data params
+    var players = [];
+    $('#players_table tbody tr').each(function() {
+      var number = $(this).children('td').first().text();
+      var email = $(this).children('td').last().text();
+      var player = { number: number, email: email };
+      players.push(player);
+    });
+
+    $.ajax({
+      url: api.endPoint + 'games',
+      data: { players: players },
+      method: 'POST',
+      success: function() {
+        window.location.replace('/users/<%= current_user.id %>');
+      },
+      error: function() {
+        alert('Error creating new game.');
+      }
+    });
+  });
+});
+</script>

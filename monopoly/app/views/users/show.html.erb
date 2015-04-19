@@ -9,18 +9,20 @@
 		<li>
 			<a href="<%= game_path(g) %>">
 				<h3>Game with <%= g.players.map { |p| p.name }.join(', ') %></h3>
-				<p>Tim's Turn</p>
+				<p><%= Player.find(g.current_player_id).name %>'s turn</p>
 				<p class="ui-li-aside">Started on <%= g.created_at.strftime("%m/%d/%Y") %></p>
 			</a>
 		</li>
 	<% end %>
 </ul>
 
+<!--
 <h2>Game Invitations</h2>
 
 <ul data-role="listview" data-inset="true" data-divider-theme="b">
 <li><a href=""><h3>Invitation from [email]</h3><p>Sent at 12:04am</p></a></li>
 </ul>
+-->
 
 
 <br><br>

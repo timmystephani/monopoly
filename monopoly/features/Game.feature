@@ -7,20 +7,20 @@ Feature: Viewing games in progress, game invitations, and creating a new game
     And I have clicked Create a New Game link
     Then I should see the new game page
 
-  Scenario: A user should be able to invite people to a game
-    Given I have an account
-    And I have clicked Create a New Game link
-    Then I should be able to invite people to a game
+    #  Scenario: A user should be able to invite people to a game
+    #Given I have an account
+    #And I have clicked Create a New Game link
+    #Then I should be able to invite people to a game
 
-  Scenario: A user should be able to accept invites to a game
-    Given I have an account
-    And I have a game invitation
-    Then I should be able to accept the invitation
+    #Scenario: A user should be able to accept invites to a game
+    #Given I have an account
+    #And I have a game invitation
+    #Then I should be able to accept the invitation
 
-  Scenario: A user should be able to reject an invite to a game
-    Given I have an account
-    And I have a game invitation
-    Then I should be able to reject the invitation
+    #Scenario: A user should be able to reject an invite to a game
+    #Given I have an account
+    #And I have a game invitation
+    #Then I should be able to reject the invitation
 
   Scenario: A user should see the status of a game on the game page
     Given I have an account

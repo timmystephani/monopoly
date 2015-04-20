@@ -17,7 +17,7 @@ end
 
 Given(/^I have an account$/) do
   visit('/')
-  within("//form[@action='/users']") do
+  within(:xpath, "//form[@action='/users']") do
     fill_in('user[email]', :with => 'Test@gmail.com')
     fill_in('user[password]', :with => 'testpw')
     click_button('Sign Up')
@@ -73,12 +73,12 @@ end
 
 Given(/^I have a game in progress$/) do
   click_link('Create a New Game')
+  sleep 5
   click_link("Create Game")
-  save_and_open_page
+  sleep 5
 end
 
 Given(/^I have selected a game$/) do
-  first('a.ui-btn.ui-btn-icon-right.ui-icon-carat-r').click
   assert page.has_content?("Game of Monopoly")
   assert page.has_content("Status")
 end

@@ -1,6 +1,6 @@
 var api = {
 
-	endPoint: 'http://localhost:3000/api/v1/',
+	endPoint: 'http://127.0.0.1:3000/api/v1/',
 
 	loadBoardSpaces: function(callback) {
 		$.ajax({

@@ -41,7 +41,6 @@ class Api::V1::GamesController < Api::V1::ApplicationController
     game.save
 
     params[:players].each do |number, info|
-      puts info['email']
       player = Player.new
       user = User.find_by_email(info['email'])
       player.user_id = user.id

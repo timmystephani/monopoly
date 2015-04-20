@@ -56,3 +56,11 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+# https://github.com/cucumber/cucumber/wiki/Hooks
+Before do 
+  has_seeded ||= false  # have to define a variable before we can reference its value
+  return has_seeded if has_seeded                 # bail if $dunit TRUE
+  load Rails.root.join('db/seeds.rb')
+  has_seeded = true                            # don't do it again.
+end 
+

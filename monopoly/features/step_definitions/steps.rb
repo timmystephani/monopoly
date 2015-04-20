@@ -73,18 +73,17 @@ end
 
 Given(/^I have a game in progress$/) do
   click_link('Create a New Game')
-  sleep 5
   click_link("Create Game")
-  sleep 5
 end
 
 Given(/^I have selected a game$/) do
+  page.find('body ul a:first-child').click
   assert page.has_content?("Game of Monopoly")
-  assert page.has_content("Status")
+  assert page.has_content?("Status")
 end
 
 Then(/^I should see the game status$/) do
-    pending # express the regexp above with the code you wish you had
+  assert has_content?('Status')
 end
 
 Then(/^I should be able to invite people to a game$/) do
@@ -104,29 +103,29 @@ Then(/^I should be able to reject the invitation$/) do
 end
 
 Then(/^I should be able to see the game history$/) do
-  pending # express the regexp above with the code you wish you had
+  assert has_content? 'History'
 end
 
 Given(/^I have selected Owned Properties$/) do
-  pending # express the regexp above with the code you wish you had
+  click_link('Owned Properties')
 end
 
 Then(/^I should be able to see the owned properties$/) do
-  pending # express the regexp above with the code you wish you had
+  assert has_content? 'Owned Properties'
 end
 
 Given(/^I have selected Roll Dice$/) do
-  pending # express the regexp above with the code you wish you had
+  click_link('Roll Dice')
 end
 
 Then(/^I should be able to see the results of my roll$/) do
-  pending # express the regexp above with the code you wish you had
+  assert has_content? 'rolled a'
 end
 
 Given(/^I have selected Refresh$/) do
-  pending # express the regexp above with the code you wish you had
+  click_link('Refresh')
 end
 
 Then(/^I should be able to see a refreshed page$/) do
-  pending # express the regexp above with the code you wish you had
+  assert has_content?('Status')
 end

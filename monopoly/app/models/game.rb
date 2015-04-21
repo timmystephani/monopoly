@@ -103,7 +103,7 @@ class Game < ActiveRecord::Base
       turn_history << current_player.name + ' paid Luxury Tax of $75.'
 
     elsif new_board_space.name == 'Go to Jail'
-      current_player.position = position = 10 # visiting jail space
+      current_player.position = 10 # visiting jail space
       current_player.in_jail = true
       current_player.jail_rolls = 0
     end

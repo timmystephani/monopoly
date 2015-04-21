@@ -1,6 +1,6 @@
 var api = {
 
-	endPoint: 'http://127.0.0.1:3000/api/v1/',
+	endPoint: 'http://localhost:3000/api/v1/',
 
 	loadBoardSpaces: function(callback) {
 		$.ajax({
@@ -30,16 +30,26 @@ var api = {
 	}, 
 
 	respondToPropertyPurchase: function(yesNo, callback) {
-		var gameId = $('#gameId').val();
-
 		$.ajax({
-			url: api.endPoint + 'games/' + gameId + '/respond_to_property_purchase',
+			url: api.endPoint + 'games/' + ui.gameId + '/respond_to_property_purchase',
 			data: { 'yes_no': yesNo },
 			success: function(data) {
 				callback(data);
 			},
 			error: function() {
 				alert('ERROR: couldnt respond to property purchase.');
+			}
+		});
+	},
+
+	payOutOfJail: function(callback) {
+		$.ajax({
+			url: api.endPoint + 'players/' + ui.currentPlayerId + '/pay_out_of_jail',
+			success: function(data) {
+				callback(data);
+			},
+			error: function() {
+				alert('ERROR: couldnt respond to pay out of jail.');
 			}
 		});
 	}

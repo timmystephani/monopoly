@@ -17,8 +17,14 @@
 
       <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
         <h1>Monopoly</h1>
-        <% if current_user %>
-        <a href="/logout">Log out</a>
+
+        <% if current_user && params[:controller] == 'users' && params[:action] == 'show' %>
+          <a href="/logout" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-delete">Log Out</a>
+        <% end %>
+        
+        <% if params[:controller] == 'games' && params[:action] == 'show' %>
+          <a href="/" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+          <button id="refresh_link" class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-refresh">Refresh</button>
         <% end %>
       </div><!-- /header -->
 

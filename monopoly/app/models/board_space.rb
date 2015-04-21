@@ -12,5 +12,4 @@
 class BoardSpace < ActiveRecord::Base
   validates :name, presence: true
   validates :position, presence: true
-  has_one :owned_property
 end

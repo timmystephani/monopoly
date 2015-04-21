@@ -2,14 +2,17 @@
 #
 # Table name: games
 #
-#  id                :integer          not null, primary key
-#  current_player_id :integer
-#  status            :string
-#  free_parking_pot  :integer
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  created_user_id   :integer
-
+#  id                            :integer          not null, primary key
+#  current_player_id             :integer
+#  status                        :string
+#  free_parking_pot              :integer
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  created_user_id               :integer
+#  user_prompt_type              :string
+#  user_prompt_question          :string
+#  current_player_doubles_rolled :integer
+#
 
 class Game < ActiveRecord::Base
   has_many :players
@@ -37,17 +40,30 @@ class Game < ActiveRecord::Base
     die2 = 1 + rand(6)
 
     #for debugging
-    # die1 = 2
+    # die1 = 3
     # die2 = 3
 
     current_player = Player.find current_player_id
 
-    started_turn_in_jail = current_player.in_jail
+    should_advance_to_next_player = true
+
+    if die1 == die2
+      self.current_player_doubles_rolled += 1
+      should_advance_to_next_player = false
+      if current_player_doubles_rolled == 3
+        should_advance_to_next_player = true
+        send_player_to_jail current_player
+        turn_history << current_player.name + ' rolled doubles 3 times and went to jail.'
+        finish_turn(current_player, turn_history, should_advance_to_next_player)
+        return
+      end
+    end 
 
     if current_player.in_jail
       if die1 == die2
         turn_history << current_player.name + ' rolled doubles and got out of jail.'
         current_player.in_jail = false
+        should_advance_to_next_player = true
       else
         # keep track of player turns in jail
         if current_player.jail_rolls == 2
@@ -57,11 +73,11 @@ class Game < ActiveRecord::Base
         else
           turn_history << current_player.name + ' did not roll doubles and is staying in jail.'
           current_player.jail_rolls += 1
-          finish_turn(current_player, turn_history, started_turn_in_jail, die1, die2)
+          finish_turn(current_player, turn_history, should_advance_to_next_player)
           return
         end
       end
-    end
+    end  
     
     current_board_space = BoardSpace.find_by_position current_player.position
     new_board_space_position = current_player.position + die1 + die2
@@ -79,17 +95,19 @@ class Game < ActiveRecord::Base
     turn_history << current_player.name + ' rolled a ' + die1.to_s + ' and a ' + die2.to_s + ' and moved from ' + current_board_space.name + ' to ' + new_board_space.name + '.'
 
     if new_board_space.is_a? Property
-      if new_board_space.owned_property.nil?
+      owned_property = OwnedProperty.where(:board_space_id => new_board_space.id, :player_id => players.map {|p| p.id }).first
+      if owned_property.nil?
         # available to buy
         self.status = 'WAITING_ON_USER_INPUT'
         self.user_prompt_question = new_board_space.name + ' is available to purchase for $' + new_board_space.purchase_price.to_s + '. Would you like to purchase?'
         self.user_prompt_type = 'PROPERTY_PURCHASE'
-      elsif new_board_space.owned_property.player.id == current_player.id
+        should_advance_to_next_player = false
+      elsif owned_property.player.id == current_player.id
         # current user owns property
         turn_history << current_player.name + ' already owns ' + new_board_space.name + '.'
       else
         # someone else owns it
-        current_owner = new_board_space.owned_property.player
+        current_owner = owned_property.player
 
         turn_history << current_player.name + ' paid $' + new_board_space.rent_price.to_s + ' to ' + current_owner.name + ' for rent.'
         current_player.cash -= new_board_space.rent_price
@@ -103,22 +121,17 @@ class Game < ActiveRecord::Base
       turn_history << current_player.name + ' paid Luxury Tax of $75.'
 
     elsif new_board_space.name == 'Go to Jail'
-      current_player.position = 10 # visiting jail space
-      current_player.in_jail = true
-      current_player.jail_rolls = 0
+      send_player_to_jail(current_player)
     end
 
-    finish_turn(current_player, turn_history, started_turn_in_jail, die1, die2)
+    finish_turn(current_player, turn_history, should_advance_to_next_player)
   end
 
-  def finish_turn(current_player, turn_history, started_turn_in_jail, die1, die2)
-    if status == 'IN_PROGRESS' && (die1 != die2 || started_turn_in_jail)
+  def finish_turn(current_player, turn_history, should_advance_to_next_player)
+    if should_advance_to_next_player
       self.current_player_id = get_next_player_id
+      self.current_player_doubles_rolled = 0
     end
-
-    # if die1 == die2
-    #   # self.current_player_doubles_rolled += 1
-    # end 
 
     # Save history
     save_history turn_history
@@ -163,6 +176,12 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  def send_player_to_jail(current_player) 
+    current_player.position = 10 # visiting jail space
+    current_player.in_jail = true
+    current_player.jail_rolls = 0
+  end
 
   # Expects history to be an array
   def save_history(turn_history)

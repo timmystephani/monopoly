@@ -62,7 +62,7 @@ var ui = {
         });
       });
     });
-    
+
     $('#jail_options_link_pay').click(function() {
       api.payOutOfJail(function() {
         $('#jail_options_popup').popup('close');
@@ -104,6 +104,8 @@ var ui = {
     ui.refreshHistory(data.history);
 
     if (ui.playerId == ui.currentPlayerId) {
+      $('#roll_dice').show();
+
       if (data.status == 'WAITING_ON_USER_INPUT') {
         if (data.user_prompt_type == 'PROPERTY_PURCHASE') {
           $('#property_purchase_popup p').text(data.user_prompt_question);
@@ -117,6 +119,8 @@ var ui = {
           $('#jail_options_popup').popup('open');
         }
       }  
+    } else {
+      $('#roll_dice').hide();      
     }
   },
 

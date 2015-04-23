@@ -116,8 +116,8 @@ class Game < ActiveRecord::Base
         end
 
         turn_history << current_player.name + ' paid $' + rent_price.to_s + ' to ' + current_owner.name + ' for rent.'
-        current_player.cash -= new_board_space.rent_price
-        current_owner.cash += new_board_space.rent_price
+        current_player.cash -= rent_price
+        current_owner.cash += rent_price
         current_owner.save
       end
 

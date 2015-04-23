@@ -40,8 +40,8 @@ class Game < ActiveRecord::Base
     die2 = 1 + rand(6)
 
     #for debugging
-    # die1 = 5
-    # die2 = 4
+    # die1 = 20
+    # die2 = 3
 
     current_player = Player.find current_player_id
 
@@ -126,6 +126,12 @@ class Game < ActiveRecord::Base
       current_player.cash -= 75 # TODO: is this lux tax amount correct
       turn_history << current_player.name + ' paid Luxury Tax of $75.'
 
+    elsif new_board_space.name == 'Income Tax'
+      self.status = 'WAITING_ON_USER_INPUT'
+      self.user_prompt_question = 'You landed on Income Tax. Would you like to pay $200 or 10%?'
+      self.user_prompt_type = 'INCOME_TAX'
+      should_advance_to_next_player = false
+
     elsif new_board_space.name == 'Go to Jail'
       send_player_to_jail(current_player)
     end
@@ -170,6 +176,33 @@ class Game < ActiveRecord::Base
     else
       turn_history << current_player.name + ' did not buy ' + new_property.name + '.'
     end
+
+    save_history turn_history
+
+    self.status = 'IN_PROGRESS'
+    self.user_prompt_question = ''
+    self.user_prompt_type = ''
+
+    self.current_player_id = get_next_player_id
+    save
+  end
+
+  def respond_to_income_tax(two_hundred_or_ten_percent)
+    turn_history = []
+
+    current_player = Player.find current_player_id
+
+    if two_hundred_or_ten_percent == '200'
+      current_player.cash -= 200
+      turn_history << current_player.name + ' paid $200 for Income Tax.'
+    else # 10 percent
+      ten_percent = 0.1 * current_player.cash
+      ten_percent = ten_percent.to_i
+      current_player.cash -= ten_percent
+      turn_history << current_player.name + ' paid $' + ten_percent.to_s + ' for Income Tax.'
+    end
+
+    current_player.save
 
     save_history turn_history
 

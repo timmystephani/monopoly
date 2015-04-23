@@ -52,5 +52,18 @@ var api = {
 				alert('ERROR: couldnt respond to pay out of jail.');
 			}
 		});
+	},
+
+	respondToIncomeTax: function(twoHundredOrTenPercent, callback) {
+		$.ajax({
+			url: api.endPoint + 'games/' + ui.gameId + '/respond_to_income_tax',
+			data: { 'two_hundred_or_ten_percent': twoHundredOrTenPercent },
+			success: function(data) {
+				callback(data);
+			},
+			error: function() {
+				alert('ERROR: couldnt respond to income tax.');
+			}
+		});
 	}
 };

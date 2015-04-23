@@ -35,6 +35,16 @@ class Api::V1::GamesController < Api::V1::ApplicationController
     render json: { status: 200, message: 'success' }
   end
 
+  def respond_to_income_tax
+    game = Game.find(params[:id])
+
+    two_hundred_or_ten_percent = params[:two_hundred_or_ten_percent]
+
+    game.respond_to_income_tax(two_hundred_or_ten_percent)
+
+    render json: { status: 200, message: 'success' }
+  end
+
   def create
     game = Game.new
     game.current_player_id = 1 # updating later

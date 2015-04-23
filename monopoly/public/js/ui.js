@@ -71,6 +71,24 @@ var ui = {
         });
       });
     });
+
+    $('#income_tax_link_200').click(function() {
+      api.respondToIncomeTax('200', function() {
+        $('#income_tax_popup').popup('close');
+        api.getGame(function(data) {
+          ui.refreshGame(data);
+        });
+      });
+    });
+
+    $('#income_tax_link_10_percent').click(function() {
+      api.respondToIncomeTax('10_percent', function() {
+        $('#income_tax_popup').popup('close');
+        api.getGame(function(data) {
+          ui.refreshGame(data);
+        });
+      });
+    });
   },
 
   showOwnedPropPopup: function(data) {
@@ -110,6 +128,9 @@ var ui = {
         if (data.user_prompt_type == 'PROPERTY_PURCHASE') {
           $('#property_purchase_popup p').text(data.user_prompt_question);
           $('#property_purchase_popup').popup('open');
+        } else if (data.user_prompt_type == 'INCOME_TAX') {
+          $('#income_tax_popup p').text(data.user_prompt_question);
+          $('#income_tax_popup').popup('open');
         }
       }
 

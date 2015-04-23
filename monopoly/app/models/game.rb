@@ -40,8 +40,8 @@ class Game < ActiveRecord::Base
     die2 = 1 + rand(6)
 
     #for debugging
-    # die1 = 3
-    # die2 = 3
+    # die1 = 5
+    # die2 = 4
 
     current_player = Player.find current_player_id
 
@@ -109,7 +109,13 @@ class Game < ActiveRecord::Base
         # someone else owns it
         current_owner = owned_property.player
 
-        turn_history << current_player.name + ' paid $' + new_board_space.rent_price.to_s + ' to ' + current_owner.name + ' for rent.'
+        rent_price = new_board_space.rent_price
+        if new_board_space.name == 'Electric Company' || new_board_space.name == 'Water Works'
+          multiplier = get_special_property_multiplier current_owner
+          rent_price = multiplier * (die1 + die2)
+        end
+
+        turn_history << current_player.name + ' paid $' + rent_price.to_s + ' to ' + current_owner.name + ' for rent.'
         current_player.cash -= new_board_space.rent_price
         current_owner.cash += new_board_space.rent_price
         current_owner.save
@@ -176,6 +182,18 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  def get_special_property_multiplier(current_owner)
+    board_space_ids = BoardSpace.where(:name => ['Water Works','Electric Company']).map{|bs| bs.id }
+
+    owned_property_count = OwnedProperty.where(:player_id => current_owner.id, :board_space_id => board_space_ids).length
+
+    if owned_property_count == 1
+      return 4
+    elsif owned_property_count == 2
+      return 10
+    end
+  end
 
   def send_player_to_jail(current_player) 
     current_player.position = 10 # visiting jail space

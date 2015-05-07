@@ -1,6 +1,7 @@
 var api = {
 
-	endPoint: 'http://localhost:3000/api/v1/',
+	//endPoint: 'http://localhost:3000/api/v1/',
+	endPoint: 'http://prod-monopoly.herokuapp.com/',
 
 	loadBoardSpaces: function(callback) {
 		$.ajax({

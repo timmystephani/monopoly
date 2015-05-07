@@ -57,7 +57,7 @@ class Game < ActiveRecord::Base
         finish_turn(current_player, turn_history, should_advance_to_next_player)
         return
       end
-    end 
+    end
 
     if current_player.in_jail
       if die1 == die2
@@ -77,8 +77,8 @@ class Game < ActiveRecord::Base
           return
         end
       end
-    end  
-    
+    end
+
     current_board_space = BoardSpace.find_by_position current_player.position
     new_board_space_position = current_player.position + die1 + die2
 
@@ -134,6 +134,12 @@ class Game < ActiveRecord::Base
 
     elsif new_board_space.name == 'Go to Jail'
       send_player_to_jail(current_player)
+
+    elsif new_board_space.name == 'Community Chest'
+      puts 'hi'
+
+    elsif new_board_space.name == 'Chance'
+      puts 'hi'
     end
 
     self.die1 = die1
@@ -222,7 +228,7 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def send_player_to_jail(current_player) 
+  def send_player_to_jail(current_player)
     current_player.position = 10 # visiting jail space
     current_player.in_jail = true
     current_player.jail_rolls = 0

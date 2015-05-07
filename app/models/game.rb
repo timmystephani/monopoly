@@ -136,6 +136,9 @@ class Game < ActiveRecord::Base
       send_player_to_jail(current_player)
     end
 
+    self.die1 = die1
+    self.die2 = die2
+
     finish_turn(current_player, turn_history, should_advance_to_next_player)
   end
 
@@ -170,21 +173,17 @@ class Game < ActiveRecord::Base
 
       # TODO: what if they don't have enough cash
       current_player.cash -= new_property.purchase_price
-      current_player.save
 
       turn_history << current_player.name + ' bought ' + new_property.name + ' for $' + new_property.purchase_price.to_s + '.'
     else
       turn_history << current_player.name + ' did not buy ' + new_property.name + '.'
     end
 
-    save_history turn_history
-
     self.status = 'IN_PROGRESS'
     self.user_prompt_question = ''
     self.user_prompt_type = ''
 
-    self.current_player_id = get_next_player_id
-    save
+    finish_turn(current_player, turn_history, self.die1 != self.die2)
   end
 
   def respond_to_income_tax(two_hundred_or_ten_percent)
@@ -202,16 +201,11 @@ class Game < ActiveRecord::Base
       turn_history << current_player.name + ' paid $' + ten_percent.to_s + ' for Income Tax.'
     end
 
-    current_player.save
-
-    save_history turn_history
-
     self.status = 'IN_PROGRESS'
     self.user_prompt_question = ''
     self.user_prompt_type = ''
 
-    self.current_player_id = get_next_player_id
-    save
+    finish_turn(current_player, turn_history, self.die1 != self.die2)
   end
 
   private

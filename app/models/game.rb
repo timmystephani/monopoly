@@ -161,6 +161,11 @@ class Game < ActiveRecord::Base
       u.save
 
       #handle logic for card
+      if u.card_index == 0 # advance to go
+        current_player.position = 0
+        current_player.cash += 200
+        turn_history << current_player.name + ' picked ' + card_drawn
+      end
 
     elsif new_board_space.name == 'Chance'
       #get all chance cards already drawn for this game

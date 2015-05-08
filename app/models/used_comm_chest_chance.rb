@@ -9,7 +9,7 @@ class UsedCommChestChance < ActiveRecord::Base
     chance_cards << 'Advance to Go (Collect $200)'
     chance_cards << 'Advance to Illinois Ave. - If You Pass Go, Collect $200'
     chance_cards << 'Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.'
-    chance_cards << 'Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. (There are two of these.)'
+    chance_cards << 'Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.'
     chance_cards << 'Advance to St. Charles Place - If You Pass Go, Collect $200'
     chance_cards << 'Bank pays you dividend of $50'
     chance_cards << 'Get out of Jail free - this card may be kept until needed, or traded/sold'

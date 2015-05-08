@@ -193,6 +193,124 @@ class Game < ActiveRecord::Base
       u.save
 
       #handle logic for card
+      if u.card_index == 0 # advance to go
+        current_player.position = 0
+        current_player.cash += 200
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 1 # advance to illinois avenue
+        #get cash for passing go
+        if current_player.position > 24
+          current_player.cash += 200
+        end
+        current_player.position = 24
+
+        turn_history << current_player.name + ' picked ' + card_drawn
+        #TODO handle property shit
+
+      elsif u.card_index == 2 # advance to nearest utility
+        if current_player.position <= 12 #electric
+          current_player.position = 12
+        elsif current_player.position <= 28 #water
+          current_player.position = 28
+        else #electric + cash
+          current_player.position = 12
+          current_player.cash += 200
+        end
+
+        turn_history << current_player.name + ' picked ' + card_drawn
+        #TODO property owned logic - if owned, 10 times die roll
+
+      elsif u.card_index == 3 # nearest railroad
+        if current_player.position <= 5 #reading
+          current_player.position = 5
+        elsif current_player.position <= 15 #pennsylvania
+          current_player.position = 15
+        elsif current_player.position <= 25 #b&o
+          current_player.position = 25
+        elsif current_player.position <= 35 #shortline
+          current_player.position = 35
+        else #reading + cash
+          current_player.position = 5
+          current_player.cash += 200
+
+        turn_history << current_player.name + ' picked ' + card_drawn
+        #TODO railroad owned or not, pay twice if owned
+
+      elsif u.card_index == 4 # advance to st. charles place
+        #get cash for passing go
+        if current_player.position > 11
+          current_player.cash += 200
+        end
+        current_player.position = 11
+
+        turn_history << current_player.name + ' picked ' + card_drawn
+        #TODO handle property shit
+
+      elsif u.card_index == 5 # bank pays $50
+        current_player.cash += 50
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 6 # get out of jail free card
+        #TODO how to handle this
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 7 # go back three spaces
+        current_player.position -= 3
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 8 # go to jail
+        should_advance_to_next_player = false
+        send_player_to_jail(current_player)
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 9 # general repairs
+        current_player.position += 0
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 10 # poor tax
+        current_player.cash -= 10
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 11 # head to reading railroad
+        #get cash for passing go
+        if current_player.position > 5
+          current_player.cash += 200
+        end
+        current_player.position = 5
+
+        turn_history << current_player.name + ' picked ' + card_drawn
+        #TODO handle property shit
+
+      elsif u.card_index == 12 # boardwalk
+        #get cash for passing go
+        if current_player.position > 39
+          current_player.cash += 200
+        end
+        current_player.position = 39
+
+        turn_history << current_player.name + ' picked ' + card_drawn
+        #TODO handle property shit
+
+      elsif u.card_index == 13 # pay each player $50
+        #get all players
+        self.players.each do |player|
+          player.cash += 50
+          player.save
+        end
+
+        #current player loses money
+        current_player.cash -= 50 * (self.players.length - 1)
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 14 # collect 150
+        current_player.cash += 150
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      elsif u.card_index == 15 # collect 100
+        current_player.cash += 100
+        turn_history << current_player.name + ' picked ' + card_drawn
+
+      end
 
     end
 

@@ -136,10 +136,59 @@ class Game < ActiveRecord::Base
       send_player_to_jail(current_player)
 
     elsif new_board_space.name == 'Community Chest'
-      puts 'hi'
+      #get all comm chest cards already drawn for this game
+      comm_chest_used = self.used_comm_chest_chances.where(card_type: :comm_chest)
+      #get all community chest cards
+      all_comm_chest = UsedCommChestChance.comm_chest_cards
+      #remove all community chest cards already drawn
+      comm_chest_used.each do |card|
+        all_comm_chest.delete!(card)
+      end
+
+      card_drawn = nil
+      #make sure still have cards left to be drawn
+      if all_comm_chest.length != 0
+        card_drawn = all_comm_chest.sample
+      #no cards left to be drawn, undo all cards drawn then draw from all cards
+      else
+        UsedCommChestChance.where(card_type: :comm_chest and game_id: self.id).destroy_all
+        all_comm_chest = UsedCommChestChance.comm_chest_cards
+        card_drawn = all_comm_chest.sample
+      end
+
+      #add drawn card to game database
+      u = UsedCommChestChance.new(:card_index => UsedCommChestChance.comm_chest_cards.index(card_drawn), :game_id => self.id, :card_type => :comm_chest)
+      u.save
+
+      #handle logic for card
 
     elsif new_board_space.name == 'Chance'
-      puts 'hi'
+      #get all chance cards already drawn for this game
+      chance_used = self.used_comm_chest_chances.where(card_type: :chance)
+      #get all chace cards
+      all_chance = UsedCommChestChance.chance_cards
+      #remove all chance cards already drawn
+      chance_used.each do |card|
+        all_chance.delete!(card)
+      end
+
+      card_drawn = nil
+      #make sure still have cards left to be drawn
+      if all_chance.length != 0
+        card_drawn = all_chance.sample
+      #no cards left to be drawn, undo all cards drawn then draw from all cards
+      else
+        UsedCommChestChance.where(card_type: :chance and game_id: self.id).destroy_all
+        all_chance = UsedCommChestChance.chance_cards
+        card_drawn = all_chance.sample
+      end
+
+      #add drawn card to game database
+      u = UsedCommChestChance.new(:card_index => UsedCommChestChance.chance_cards.index(card_drawn), :game_id => self.id, :card_type => :chance)
+      u.save
+
+      #handle logic for card
+
     end
 
     self.die1 = die1

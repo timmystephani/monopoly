@@ -123,9 +123,47 @@ Then(/^I should be able to see the results of my roll$/) do
 end
 
 Given(/^I have selected Refresh$/) do
-  click_link('Refresh')
+  #click_link('#refresh_link')
+  find('#refresh_link').click
+end
+
+Given(/^I have clicked yes to purchase the property$/) do
+  find('#purchase_property_link_yes').click
+end
+
+Given(/^I have rolled dice around the board$/) do
+  count = 0
+  while true
+    click_link('Roll Dice')
+    sleep 1
+    if count == 50
+      break
+    elsif has_content? 'Purchase Property?'
+      find('#purchase_property_link_yes').click
+    elsif has_content? 'Jail Options'
+      find('#jail_options_link_pay').click
+      #elsif has_content? 'passed GO'
+    elsif has_content? '10%'
+      find('#income_tax_link_200').click
+    end
+    sleep 1
+    count += 1
+  end
+  
 end
 
 Then(/^I should be able to see a refreshed page$/) do
   assert has_content?('Status')
 end
+
+Then(/^I should be able to see that I bought it$/) do
+  assert has_content?('bought')
+end
+
+Then(/^I should be able to pass go$/) do
+  assert has_content?('passed GO')
+end
+
+
+
+  

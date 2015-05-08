@@ -133,6 +133,7 @@ class Game < ActiveRecord::Base
       should_advance_to_next_player = false
 
     elsif new_board_space.name == 'Go to Jail'
+      should_advance_to_next_player = false
       send_player_to_jail(current_player)
 
     elsif new_board_space.name == 'Community Chest'

@@ -59,3 +59,20 @@ Feature: Viewing games in progress, game invitations, and creating a new game
     And I have selected a game
     And I have selected Refresh
     Then I should be able to see a refreshed page
+
+  @javascript
+  Scenario: A user should be able to buy a property
+    Given I have an account
+    And I have a game in progress
+    And I have selected a game
+    And I have selected Roll Dice
+    And I have clicked yes to purchase the property
+    Then I should be able to see that I bought it
+
+  @javascript
+  Scenario: A user should be able to roll multiple times
+    Given I have an account
+    And I have a game in progress
+    And I have selected a game
+    And I have rolled dice around the board
+    Then I should be able to pass go

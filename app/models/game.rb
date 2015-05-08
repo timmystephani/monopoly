@@ -152,7 +152,7 @@ class Game < ActiveRecord::Base
         card_drawn = all_comm_chest.sample
       #no cards left to be drawn, undo all cards drawn then draw from all cards
       else
-        UsedCommChestChance.where(card_type: :comm_chest and game_id: self.id).destroy_all
+        UsedCommChestChance.where(card_type: :comm_chest, game_id: self.id).destroy_all
         all_comm_chest = UsedCommChestChance.comm_chest_cards
         card_drawn = all_comm_chest.sample
       end
@@ -245,7 +245,7 @@ class Game < ActiveRecord::Base
         card_drawn = all_chance.sample
       #no cards left to be drawn, undo all cards drawn then draw from all cards
       else
-        UsedCommChestChance.where(card_type: :chance and game_id: self.id).destroy_all
+        UsedCommChestChance.where(card_type: :chance, game_id: self.id).destroy_all
         all_chance = UsedCommChestChance.chance_cards
         card_drawn = all_chance.sample
       end

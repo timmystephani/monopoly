@@ -165,6 +165,67 @@ class Game < ActiveRecord::Base
         current_player.position = 0
         current_player.cash += 200
         turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 1 # collect 75
+        current_player.cash += 75
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 2 # doctor costs 50
+        current_player.cash -= 50
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 3 # get out of jail free card
+        #TODO how to handle this
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 4 # go to jail
+        should_advance_to_next_player = false
+        send_player_to_jail(current_player)
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 5 # collect 10 from each player
+        #get all players
+        self.players.each do |player|
+          player.cash -= 10
+          player.save
+        end
+        #current player loses money
+        current_player.cash += 10 * (self.players.length - 1)
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 6 # opera - collect 50 from each player
+        #get all players
+        self.players.each do |player|
+          player.cash -= 50
+          player.save
+        end
+        #current player loses money
+        current_player.cash += 50 * (self.players.length - 1)
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 7 # collect 20
+        current_player.cash += 20
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 8 # collect 100
+        current_player.cash += 100
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 9 # lose 100
+        current_player.cash -= 100
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 10 # lose 50
+        current_player.cash -= 50
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 11 # get 25
+        current_player.cash += 25
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 12 # street repairs
+        current_player.cash += 0
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 13 # get 10
+        current_player.cash += 10
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 14 # get 100
+        current_player.cash += 100
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 15 # get 50
+        current_player.cash += 50
+        turn_history << current_player.name + ' picked ' + card_drawn
+      elsif u.card_index == 16 # get 100
+        current_player.cash += 100
+        turn_history << current_player.name + ' picked ' + card_drawn
       end
 
     elsif new_board_space.name == 'Chance'

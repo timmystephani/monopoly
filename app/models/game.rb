@@ -294,6 +294,7 @@ class Game < ActiveRecord::Base
         else #reading + cash
           current_player.position = 5
           current_player.cash += 200
+        end
 
         turn_history << current_player.name + ' picked ' + card_drawn
         #TODO railroad owned or not, pay twice if owned

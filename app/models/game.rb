@@ -40,7 +40,7 @@ class Game < ActiveRecord::Base
     die2 = 1 + rand(6)
 
     #for debugging
-    # die1 = 20
+    # die1 = 30
     # die2 = 3
 
     current_player = Player.find current_player_id
@@ -94,7 +94,7 @@ class Game < ActiveRecord::Base
 
     turn_history << current_player.name + ' rolled a ' + die1.to_s + ' and a ' + die2.to_s + ' and moved from ' + current_board_space.name + ' to ' + new_board_space.name + '.'
 
-    if new_board_space.is_a? Property
+    if new_board_space.is_a?(Property) || new_board_space.is_a?(RailRoad)
       owned_property = OwnedProperty.where(:board_space_id => new_board_space.id, :player_id => players.map {|p| p.id }).first
       if owned_property.nil?
         # available to buy
@@ -109,10 +109,14 @@ class Game < ActiveRecord::Base
         # someone else owns it
         current_owner = owned_property.player
 
-        rent_price = new_board_space.rent_price
-        if new_board_space.name == 'Electric Company' || new_board_space.name == 'Water Works'
-          multiplier = get_special_property_multiplier current_owner
-          rent_price = multiplier * (die1 + die2)
+        if new_board_space.is_a? RailRoad
+          rent_price = get_railroad_rent_price current_owner
+        else
+          rent_price = new_board_space.rent_price
+          if new_board_space.name == 'Electric Company' || new_board_space.name == 'Water Works'
+            multiplier = get_special_property_multiplier current_owner
+            rent_price = multiplier * (die1 + die2)
+          end
         end
 
         turn_history << current_player.name + ' paid $' + rent_price.to_s + ' to ' + current_owner.name + ' for rent.'
@@ -460,6 +464,22 @@ class Game < ActiveRecord::Base
       return 4
     elsif owned_property_count == 2
       return 10
+    end
+  end
+
+  def get_railroad_rent_price(current_owner)
+    board_space_ids = BoardSpace.where('name LIKE ?', '%' + 'Railroad')
+
+    owned_property_count = OwnedProperty.where(:player_id => current_owner.id, :board_space_id => board_space_ids).length
+
+    if owned_property_count == 1
+      return 25
+    elsif owned_property_count == 2
+      return 50
+    elsif owned_property_count == 3
+      return 100
+    elsif owned_property_count == 4
+      return 200
     end
   end
 

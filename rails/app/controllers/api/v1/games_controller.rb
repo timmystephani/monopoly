@@ -1,4 +1,6 @@
 class Api::V1::GamesController < Api::V1::ApplicationController
+  #before_filter :authenticate, :only => [:show]  
+
   def show
     game = Game.find(params[:id])
     history = game.histories.order('created_at DESC').limit(10)

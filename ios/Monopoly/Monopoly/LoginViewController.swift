@@ -17,6 +17,9 @@ class LoginViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        emailTextView.text = "timmy.stephani@gmail.com"
+        passwordTextView.text = "password"
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +34,7 @@ class LoginViewController: UITableViewController {
         //var alert = UIAlertView(title: "Success!", message: "hi", delegate: nil, cancelButtonTitle: "Okay.")
         //alert.show()
         var params: NSMutableDictionary = ["user":Dictionary<String, String>()]
-        params["user"] = ["email": "timmy.stephani@gmail.com", "password": "password"]
+        params["user"] = ["email": emailTextView.text, "password": passwordTextView.text]
         
         Http.post(params, url: "http://localhost:3000/api/v1/users/auth_token") { (succeeded: Bool, response: NSDictionary) -> () in
             //var alert = UIAlertView(title: "Success!", message: "hi", delegate: nil, cancelButtonTitle: "Okay.")

@@ -1,4 +1,6 @@
 class Api::V1::PlayersController < Api::V1::ApplicationController
+
+
   def show
     player = Player.find(params[:id])
 
@@ -21,5 +23,7 @@ class Api::V1::PlayersController < Api::V1::ApplicationController
     
     render json: { status: 200, message: 'success' }
   end
+
+  
 
 end

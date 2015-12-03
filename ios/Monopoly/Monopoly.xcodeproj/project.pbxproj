@@ -19,6 +19,9 @@
 		22F700CB1B5B342900777E87 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700CA1B5B342900777E87 /* Game.swift */; };
 		22F700CD1B5B345E00777E87 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700CC1B5B345E00777E87 /* Player.swift */; };
 		22F700CF1B5B34DC00777E87 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700CE1B5B34DC00777E87 /* User.swift */; };
+		22F700D11B5B69C000777E87 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700D01B5B69C000777E87 /* GameViewController.swift */; };
+		22F700D31B5B774300777E87 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700D21B5B774300777E87 /* HistoryViewController.swift */; };
+		22F700D51B5B7D9500777E87 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F700D41B5B7D9500777E87 /* History.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 		22F700CA1B5B342900777E87 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		22F700CC1B5B345E00777E87 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		22F700CE1B5B34DC00777E87 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		22F700D01B5B69C000777E87 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		22F700D21B5B774300777E87 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		22F700D41B5B7D9500777E87 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,18 +95,15 @@
 		22AF842F1B5A40B2001E0D20 /* Monopoly */ = {
 			isa = PBXGroup;
 			children = (
+				22F700D71B5B7F5900777E87 /* ViewControllers */,
+				22F700D61B5B7F4200777E87 /* Models */,
 				22AF84321B5A40B2001E0D20 /* AppDelegate.swift */,
-				22AF84341B5A40B2001E0D20 /* LoginViewController.swift */,
 				22AF84361B5A40B2001E0D20 /* Main.storyboard */,
 				22AF84391B5A40B2001E0D20 /* Images.xcassets */,
 				22AF843B1B5A40B2001E0D20 /* LaunchScreen.xib */,
 				22AF84301B5A40B2001E0D20 /* Supporting Files */,
 				22F700C41B5A550000777E87 /* Globals.swift */,
-				22F700C61B5A56C300777E87 /* HomeViewController.swift */,
 				22F700C81B5A59C200777E87 /* Http.swift */,
-				22F700CA1B5B342900777E87 /* Game.swift */,
-				22F700CC1B5B345E00777E87 /* Player.swift */,
-				22F700CE1B5B34DC00777E87 /* User.swift */,
 			);
 			path = Monopoly;
 			sourceTree = "<group>";
@@ -128,6 +131,28 @@
 				22AF84471B5A40B2001E0D20 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22F700D61B5B7F4200777E87 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				22F700CC1B5B345E00777E87 /* Player.swift */,
+				22F700CE1B5B34DC00777E87 /* User.swift */,
+				22F700CA1B5B342900777E87 /* Game.swift */,
+				22F700D41B5B7D9500777E87 /* History.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		22F700D71B5B7F5900777E87 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				22F700C61B5A56C300777E87 /* HomeViewController.swift */,
+				22F700D21B5B774300777E87 /* HistoryViewController.swift */,
+				22AF84341B5A40B2001E0D20 /* LoginViewController.swift */,
+				22F700D01B5B69C000777E87 /* GameViewController.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +258,10 @@
 				22AF84351B5A40B2001E0D20 /* LoginViewController.swift in Sources */,
 				22F700CB1B5B342900777E87 /* Game.swift in Sources */,
 				22AF84331B5A40B2001E0D20 /* AppDelegate.swift in Sources */,
+				22F700D51B5B7D9500777E87 /* History.swift in Sources */,
+				22F700D31B5B774300777E87 /* HistoryViewController.swift in Sources */,
 				22F700C51B5A550000777E87 /* Globals.swift in Sources */,
+				22F700D11B5B69C000777E87 /* GameViewController.swift in Sources */,
 				22F700CF1B5B34DC00777E87 /* User.swift in Sources */,
 				22F700CD1B5B345E00777E87 /* Player.swift in Sources */,
 				22F700C71B5A56C300777E87 /* HomeViewController.swift in Sources */,

@@ -120,10 +120,102 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="New Game" id="3go-3m-dWk"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="sd3-2s-hwK" kind="showDetail" identifier="showGameSegue" id="Zbo-Mh-y6Y"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k5P-LF-dlk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4302" y="456"/>
+        </scene>
+        <!--Monopoly Game-->
+        <scene sceneID="QhJ-go-5at">
+            <objects>
+                <viewController id="OW9-LG-Wai" customClass="GameViewController" customModule="Monopoly" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XnU-tt-te3"/>
+                        <viewControllerLayoutGuide type="bottom" id="nnS-Gv-Ajb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YyM-ej-NU0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qj4-fQ-iD1">
+                                <rect key="frame" x="87" y="111" width="402" height="155"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7f-As-ihU">
+                                <rect key="frame" x="108" y="295" width="55" height="30"/>
+                                <state key="normal" title="History">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showHistory" destination="OW9-LG-Wai" eventType="touchUpInside" id="Odb-VM-vVE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Monopoly Game" id="20n-Uo-2zn">
+                        <barButtonItem key="leftBarButtonItem" title="Home" id="5Nl-eQ-Gxb">
+                            <connections>
+                                <action selector="home" destination="OW9-LG-Wai" id="22M-Ii-73D"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="I2O-k2-9FQ">
+                            <connections>
+                                <action selector="refresh" destination="OW9-LG-Wai" id="mE8-Gp-F0W"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="playersLabel" destination="Qj4-fQ-iD1" id="oAa-CX-NRr"/>
+                        <outlet property="statusLabel" destination="Qj4-fQ-iD1" id="A43-vP-Pyj"/>
+                        <segue destination="0SX-DI-XdE" kind="presentation" identifier="showHistorySegue" id="ICc-NP-1eW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="maV-wB-AFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5803" y="456"/>
+        </scene>
+        <!--History-->
+        <scene sceneID="KOb-D9-7mT">
+            <objects>
+                <viewController id="62o-L4-pfP" customClass="HistoryViewController" customModule="Monopoly" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2pC-9V-6BV"/>
+                        <viewControllerLayoutGuide type="bottom" id="kXB-da-yLm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ns3-2B-FNT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="48" translatesAutoresizingMaskIntoConstraints="NO" id="pA5-2E-vcx">
+                                <rect key="frame" x="16" y="84" width="278" height="496"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="History" id="fMT-vQ-ePD">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="08e-Bl-uBL">
+                            <connections>
+                                <action selector="done" destination="62o-L4-pfP" id="ngA-g2-JE0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fs9-Nr-Jj7"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="historyLabel" destination="pA5-2E-vcx" id="Jam-y8-35m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eZe-1e-OCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7244" y="456"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bqq-OY-4cG">
@@ -160,6 +252,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vpU-8h-Om7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3490" y="456"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Cbl-Py-lth">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sd3-2s-hwK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S4w-cC-589">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="OW9-LG-Wai" kind="relationship" relationship="rootViewController" id="HmZ-Mp-oGB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mh3-YF-MTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4991" y="456"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7MW-Jl-Cfq">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0SX-DI-XdE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FxZ-rO-Lxw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="62o-L4-pfP" kind="relationship" relationship="rootViewController" id="I2d-Cn-uYf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xbG-ho-4rg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6432" y="456"/>
         </scene>
     </scenes>
 </document>
